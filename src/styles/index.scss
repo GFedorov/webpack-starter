@@ -5,12 +5,12 @@ body {
 }
 
 #stage {
-	background:url('../img/background.jpg');
+	background:url('../img/tile.png');
 	width: 600px;
 	height: 400px;
 	position: relative;
 	display: inline-block;
-	transition:background .3s;
+	transition:background .05s;
 
 }
 .main-hero{
@@ -22,5 +22,4 @@ body {
 	left:50%;
 	top: 50%;
 	transform: translate(-50%,-50%);
-	
 }
