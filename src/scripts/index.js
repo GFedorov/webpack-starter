@@ -21,11 +21,12 @@ window.addEventListener('load', function() {
 
     console.log({centerX, centerY});
 
-    gameWorld.onmousemove = function(event) {
-        console.log((event.offsetX - centerX) + ':' + (event.offsetY - centerY));
+    stage.onmousemove = function(event) {
+        //console.log((event.offsetX - centerX) + ':' + (event.offsetY - centerY));
         deltaPosX = (event.offsetX - centerX) * speedKoeff;
         deltaPosY = (event.offsetY - centerY) * speedKoeff;
         //gameWorld.style.transform = 'translate('+ backgroundPosX + 'px, '+ backgroundPosY + 'px)';
+        stage.style.backgroundPosition = backgroundPosX + 'px' + backgroundPosY + 'px';
         var angleTangens = (event.offsetY - centerY) / (event.offsetX - centerX);
         var angle = Math.atan(angleTangens) * 180 / Math.PI;
         mainHero.style.transform = 'translate(-50%,-50%) rotate(' + angle + 'deg)';
@@ -33,11 +34,11 @@ window.addEventListener('load', function() {
 
     console.log(centerX);
     setInterval(function() {
-        backgroundPosX-=deltaPosX;
-        backgroundPosY-=deltaPosY;
+        backgroundPosX = backgroundPosX - Math.round(deltaPosX);
+        backgroundPosY = backgroundPosY - Math.round(deltaPosY);
         
 
-        gameWorld.style.transform = 'translate('+ backgroundPosX + 'px, '+ backgroundPosY + 'px)' ;
-
+        // gameWorld.style.transform = 'translate('+ backgroundPosX + 'px, '+ backgroundPosY + 'px)' ;
+        stage.style.backgroundPosition = backgroundPosX + 'px ' + backgroundPosY + 'px';
     }, 50);
 });
