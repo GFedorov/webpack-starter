@@ -48,10 +48,28 @@ body {
 }
 .fight .sword{
 	transform: rotate(150deg) scale(1.3);
-
-
-
-
-
 }
 
+.hit-area{
+	width: 140px;
+	height: 140px;
+	border-radius: 50%;
+	background-color: red;
+	opacity:0.5;
+	position:absolute;
+	transform: translate(-50%,-50%); 
+}
+.monster{
+	width: 60px;
+	height: 50px;
+	background-image: url('../img/bullHero.png');
+	background-size:contain;
+	position: absolute;
+	transform: translate(-50%,-50%);
+	background-repeat: no-repeat;
+	transition: all 0.5s;
+	&.fired{
+		transform: translate(-50%,-50%) scale(0.0003);
+		opacity: 0;
+	}
+}
