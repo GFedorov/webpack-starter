@@ -13,7 +13,7 @@ body {
 	left: 50%;
 	top: 50%;
 	transform: translate(-50%,-50%);
-	background:url('../img/tile.png');
+	
 
 }
 #gameworld {
@@ -23,11 +23,35 @@ body {
 }
 .main-hero{
 	width: 60px;
-	height: 40px;
-	border-radius: 50%;
-	background-color: red;
+	height: 50px;
+	background-image: url('../img/bullHero.png');
+	background-size:contain;
 	position: absolute;
 	left:50%;
 	top: 50%;
 	transform: translate(-50%,-50%);
+	background-repeat: no-repeat;
 }
+
+.sword{
+	width: 60px;
+	height: 15px;
+	background-image: url('../img/sword.png');
+	background-size:contain;
+	background-repeat: no-repeat;
+	position: absolute;
+	left:-5px;
+	bottom:0 ;
+	transform: rotate(50deg);
+	transition: all 0.3s;
+	transform-origin: 0 0;
+}
+.fight .sword{
+	transform: rotate(150deg) scale(1.3);
+
+
+
+
+
+}
+

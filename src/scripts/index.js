@@ -9,6 +9,11 @@ window.addEventListener('load', function() {
     var mainHero = document.createElement('div');
     mainHero.setAttribute('id', 'hero');
     mainHero.setAttribute('class', 'main-hero');
+    var sword = document.createElement('div');
+    sword.setAttribute('id', 'sword');
+    sword.setAttribute('class', 'sword');
+    mainHero.appendChild(sword);
+
     stage.appendChild(mainHero);
 
     var gameWorld = document.getElementById('gameworld');
@@ -22,14 +27,21 @@ window.addEventListener('load', function() {
     console.log({centerX, centerY});
 
     stage.onmousemove = function(event) {
-        //console.log((event.offsetX - centerX) + ':' + (event.offsetY - centerY));
-        deltaPosX = (event.offsetX - centerX) * speedKoeff;
-        deltaPosY = (event.offsetY - centerY) * speedKoeff;
-        //gameWorld.style.transform = 'translate('+ backgroundPosX + 'px, '+ backgroundPosY + 'px)';
-        stage.style.backgroundPosition = backgroundPosX + 'px' + backgroundPosY + 'px';
-        var angleTangens = (event.offsetY - centerY) / (event.offsetX - centerX);
+        deltaPosX = (event.clientX - stageCoords.x - centerX) * speedKoeff;
+        deltaPosY = (event.clientY - stageCoords.y - centerY) * speedKoeff;
+        var angleTangens = deltaPosY / deltaPosX;
         var angle = Math.atan(angleTangens) * 180 / Math.PI;
+        if (deltaPosX < 0) {
+            angle = angle + 180;
+        }
+        angle = angle - 90;
         mainHero.style.transform = 'translate(-50%,-50%) rotate(' + angle + 'deg)';
+    };
+    stage.onclick=function(){
+        mainHero.classList.add('fight');
+        setTimeout(function(){
+            mainHero.classList.remove('fight');
+        },300);
     };
 
     console.log(centerX);
@@ -38,7 +50,7 @@ window.addEventListener('load', function() {
         backgroundPosY = backgroundPosY - Math.round(deltaPosY);
         
 
-        // gameWorld.style.transform = 'translate('+ backgroundPosX + 'px, '+ backgroundPosY + 'px)' ;
-        stage.style.backgroundPosition = backgroundPosX + 'px ' + backgroundPosY + 'px';
+        gameWorld.style.transform = 'translate('+ backgroundPosX + 'px, '+ backgroundPosY + 'px)' ;
+        
     }, 50);
 });
