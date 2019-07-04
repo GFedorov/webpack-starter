@@ -1,75 +1,104 @@
 $body-color: green;
 
 body {
-  color: $body-color;
+    color: $body-color;
 }
 
 #stage {
-	width: 600px;
-	height: 400px;
-	display: block;
-	overflow: hidden;
-	position: absolute;
-	left: 50%;
-	top: 50%;
-	transform: translate(-50%,-50%);
-	
+    width: 600px;
+    height: 400px;
+    display: block;
+    overflow: hidden;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
 
 }
+
 #gameworld {
-	background:url('../img/tile.png');
-	width: 6000px;
-	height: 4000px;
-}
-.main-hero{
-	width: 60px;
-	height: 50px;
-	background-image: url('../img/bullHero.png');
-	background-size:contain;
-	position: absolute;
-	left:50%;
-	top: 50%;
-	transform: translate(-50%,-50%);
-	background-repeat: no-repeat;
+    background: url('../img/tile.png');
+    width: 6000px;
+    height: 4000px;
 }
 
-.sword{
-	width: 60px;
-	height: 15px;
-	background-image: url('../img/sword.png');
-	background-size:contain;
-	background-repeat: no-repeat;
-	position: absolute;
-	left:-5px;
-	bottom:0 ;
-	transform: rotate(50deg);
-	transition: all 0.3s;
-	transform-origin: 0 0;
-}
-.fight .sword{
-	transform: rotate(150deg) scale(1.3);
+.main-hero {
+    width: 60px;
+    height: 50px;
+    background-image: url('../img/bullHero.png');
+    background-size: contain;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-repeat: no-repeat;
 }
 
-.hit-area{
-	width: 140px;
-	height: 140px;
-	border-radius: 50%;
-	background-color: red;
-	opacity:0.5;
-	position:absolute;
-	transform: translate(-50%,-50%); 
+.sword {
+    width: 60px;
+    height: 15px;
+    background-image: url('../img/sword.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    position: absolute;
+    left: -5px;
+    bottom: 0;
+    transform: rotate(50deg);
+    transition: all 0.3s;
+    transform-origin: 0 0;
 }
-.monster{
-	width: 60px;
-	height: 50px;
-	background-image: url('../img/bullHero.png');
-	background-size:contain;
-	position: absolute;
-	transform: translate(-50%,-50%);
-	background-repeat: no-repeat;
-	transition: all 0.5s;
-	&.fired{
-		transform: translate(-50%,-50%) scale(0.0003);
-		opacity: 0;
-	}
+
+
+
+.fight .sword {
+    transform: rotate(150deg) ;
 }
+
+
+.dubina {
+    width: 125px;
+    height: 50px;
+    background-image: url('../img/red_dubina.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    position: absolute;
+    left: 5px;
+    bottom: 0;
+    transform: rotate(50deg);
+    transition: all 0.3s;
+    transform-origin: 0 0;
+}
+
+.fight .dubina {
+    top: 20px;
+    left:35px;
+    transform: rotate(150deg) ;
+}
+
+.hit-area {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background-color: red;
+    opacity: 0.5;
+    position: absolute;
+    transform: translate(-50%, -50%);
+}
+
+.monster {
+    width: 60px;
+    height: 50px;
+    background-image: url('../img/bullHero.png');
+    background-size: contain;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    background-repeat: no-repeat;
+    transition: all 0.5s;
+
+    &.fired {
+        transform: translate(-50%, -50%) scale(0.0003);
+        opacity: 0;
+    }
+}
+
