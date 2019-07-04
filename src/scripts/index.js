@@ -6,12 +6,77 @@ function interSect(obj1, obj2, destination) {
     return (Math.pow(deltaX, 2) + Math.pow(deltaY, 2)) < Math.pow(destination, 2);
 }
 
-function createMonster(stageEl) {
-    var x = 400;
-    var y = 200;
-    var monster = new Monster('blob', stageEl, x, y);
-    var monster2 = new Monster('blob2', stageEl, 700, y);
+function Hero(worldEl, stageEl, x, y) {
+    this.x = x;
+    this.y = y;
+    var heroEl = document.createElement('div');
+    heroEl.setAttribute('id', 'hero');
+    heroEl.setAttribute('class', 'main-hero');
+    var sword = document.createElement('div');
+    sword.setAttribute('id', 'sword');
+    sword.setAttribute('class', 'sword');
+    heroEl.appendChild(sword);
+    var hitRound = document.querySelector('.hit-area');
+    var backgroundPosX = 0;
+    var backgroundPosY = 0;
+    var deltaPosX = 0;
+    var deltaPosY = 0;
+    var speedKoeff = 0.1;
+    var stageCoords = stageEl.getBoundingClientRect();
+    var centerX = Math.round(stageCoords.width / 2);
+    var centerY = Math.round(stageCoords.height / 2);
+    this.moveEvent = function(event) {
+        deltaPosX = (event.clientX - stageCoords.x - centerX) * speedKoeff;
+        deltaPosY = (event.clientY - stageCoords.y - centerY) * speedKoeff;
+        var angleTangens = deltaPosY / deltaPosX;
+        var angle = Math.atan(angleTangens) * 180 / Math.PI;
+        if (deltaPosX < 0) {
+            angle = angle + 180;
+        }
+        angle = angle - 90;
+        heroEl.style.transform = 'translate(-50%,-50%) rotate(' + angle + 'deg)';
+    }
+    this.fight = function() {
+        heroEl.classList.add('fight');
+        setTimeout(function() {
+            heroEl.classList.remove('fight');
+        }, 300);
 
+    };
+    this.checkMonster = function(monster) {
+        if (interSect({ x: -backgroundPosX + centerX, y: -backgroundPosY + centerY }, monster, 70)) {
+            monster.destroy();
+        }
+
+    };
+    this.checkWeapon = function(weapon) {
+        if (interSect({ x: -backgroundPosX + centerX, y: -backgroundPosY + centerY }, weapon, 70)) {
+            var dubina = document.createElement('div');
+            dubina.setAttribute('id', 'dubina');
+            dubina.setAttribute('class', 'dubina');
+            heroEl.removeChild(sword);
+            heroEl.appendChild(dubina);
+            weapon.destroy();
+        }
+
+    };
+    this.changeWorld = function() {
+        backgroundPosX = backgroundPosX - Math.round(deltaPosX);
+        backgroundPosY = backgroundPosY - Math.round(deltaPosY);
+
+        hitRound.style.left = -backgroundPosX + centerX + 'px';
+        hitRound.style.top = -backgroundPosY + centerY + 'px';
+        worldEl.style.transform = 'translate(' + backgroundPosX + 'px, ' + backgroundPosY + 'px)';
+
+    }
+
+    stageEl.appendChild(heroEl);
+
+}
+
+function createMonster(stageEl, x, y, monsters) {
+    var monster = new Monster('blob'+monsters.length, stageEl, x, y);
+    monsters.push(monster);
     return monster;
 }
 
@@ -100,71 +165,30 @@ function Weapon(id, stageEl, x, y, speed) {
 
 window.addEventListener('load', function() {
     var stage = document.getElementById('stage');
-    var stageCoords = stage.getBoundingClientRect();
-    var centerX = Math.round(stageCoords.width / 2);
-    var centerY = Math.round(stageCoords.height / 2);
-
-    var mainHero = document.createElement('div');
-    mainHero.setAttribute('id', 'hero');
-    mainHero.setAttribute('class', 'main-hero');
-    var sword = document.createElement('div');
-    sword.setAttribute('id', 'sword');
-    sword.setAttribute('class', 'sword');
-    mainHero.appendChild(sword);
-
-
-    stage.appendChild(mainHero);
-
     var gameWorld = document.getElementById('gameworld');
-    var hitRound = document.querySelector('.hit-area');
-    var backgroundPosX = 0;
-    var backgroundPosY = 0;
-    var deltaPosX = 0;
-    var deltaPosY = 0;
-    var speedKoeff = 0.1;
+    var hero = new Hero(gameworld, stage, 0, 0);
+    var monsters = [];
+    createMonster(gameWorld, 300, 200, monsters);
+    createMonster(gameWorld, 200, 400, monsters);
+    createMonster(gameWorld, 480, 600, monsters);
+    createMonster(gameWorld, 80, 40, monsters);
 
-    console.log({ centerX, centerY });
-    var monster = createMonster(gameWorld);
     var weapon = createWeapon(gameWorld);
-    
-
     stage.onmousemove = function(event) {
-        deltaPosX = (event.clientX - stageCoords.x - centerX) * speedKoeff;
-        deltaPosY = (event.clientY - stageCoords.y - centerY) * speedKoeff;
-        var angleTangens = deltaPosY / deltaPosX;
-        var angle = Math.atan(angleTangens) * 180 / Math.PI;
-        if (deltaPosX < 0) {
-            angle = angle + 180;
-        }
-        angle = angle - 90;
-        mainHero.style.transform = 'translate(-50%,-50%) rotate(' + angle + 'deg)';
+        hero.moveEvent(event);
+
     };
     stage.onclick = function() {
-        mainHero.classList.add('fight');
-        if (interSect({ x: -backgroundPosX + centerX, y: -backgroundPosY + centerY }, monster, 70)) {
-            monster.destroy();
+        hero.fight();
+        for (var i = 0; i< monsters.length ; i++) {
+            hero.checkMonster(monsters[i]);
         }
-        if (interSect({ x: -backgroundPosX + centerX, y: -backgroundPosY + centerY }, weapon, 70)) {
-            var dubina = document.createElement('div');
-            dubina.setAttribute('id', 'dubina');
-            dubina.setAttribute('class', 'dubina');
-            mainHero.removeChild(sword);
-            mainHero.appendChild(dubina);
-            weapon.destroy();
-        }
-        setTimeout(function() {
-            mainHero.classList.remove('fight');
-        }, 300);
+        hero.checkWeapon(weapon);
     };
 
-    console.log(centerX);
-    setInterval(function() {
-        backgroundPosX = backgroundPosX - Math.round(deltaPosX);
-        backgroundPosY = backgroundPosY - Math.round(deltaPosY);
+     setInterval(function() {
+        hero.changeWorld();
 
-        hitRound.style.left = -backgroundPosX + centerX + 'px';
-        hitRound.style.top = -backgroundPosY + centerY + 'px';
-        gameWorld.style.transform = 'translate(' + backgroundPosX + 'px, ' + backgroundPosY + 'px)';
 
     }, 50);
 });
