@@ -1,16 +1,14 @@
-import{interSect} from './helper.js';
+import { interSect } from './helper.js';
+import {Weapon} from './weapon.js';
 
 function Hero(worldEl, stageEl, x, y) {
+    var me = this;
     this.x = x;
     this.y = y;
+    var hitRound = document.querySelector('.hit-area');
     var heroEl = document.createElement('div');
     heroEl.setAttribute('id', 'hero');
     heroEl.setAttribute('class', 'main-hero');
-    var sword = document.createElement('div');
-    sword.setAttribute('id', 'sword');
-    sword.setAttribute('class', 'sword');
-    heroEl.appendChild(sword);
-    var hitRound = document.querySelector('.hit-area');
     var backgroundPosX = 0;
     var backgroundPosY = 0;
     var deltaPosX = 0;
@@ -38,20 +36,28 @@ function Hero(worldEl, stageEl, x, y) {
 
     };
     this.checkMonster = function(monster) {
-        if (interSect({ x: -backgroundPosX + centerX, y: -backgroundPosY + centerY }, monster, 70)) {
+        if (interSect({ x: -backgroundPosX + centerX, y: -backgroundPosY + centerY }, monster, me.weapon.settings.radius)) {
             monster.destroy();
         }
 
     };
-    this.checkWeapon = function(weapon) {
-        if (interSect({ x: -backgroundPosX + centerX, y: -backgroundPosY + centerY }, weapon, 70)) {
-            var dubina = document.createElement('div');
-            dubina.setAttribute('id', 'dubina');
-            dubina.setAttribute('class', 'dubina');
-            heroEl.removeChild(sword);
-            heroEl.appendChild(dubina);
+    this.pickWeapon = function(weapon){
+        var el = document.createElement('div');
+            el.setAttribute('id', weapon.id);
+            el.setAttribute('class', weapon.settings.className);
+            stageEl.appendChild(el);
+            heroEl.innerHTML = '';
+            heroEl.appendChild(el);
+            me.weapon = weapon;
+            hitRound.style.width = me.weapon.settings.radius * 2 + 'px';
+            hitRound.style.height = me.weapon.settings.radius * 2 + 'px';
             weapon.destroy();
-        }
+
+    };
+    this.checkWeapon = function(weapon) {
+        if (interSect({ x: -backgroundPosX + centerX, y: -backgroundPosY + centerY }, weapon, me.weapon.settings.radius)) {
+            me.pickWeapon(weapon);
+            }
 
     };
     this.changeWorld = function() {
@@ -63,13 +69,14 @@ function Hero(worldEl, stageEl, x, y) {
         worldEl.style.transform = 'translate(' + backgroundPosX + 'px, ' + backgroundPosY + 'px)';
 
     };
-
+    var weapon = new Weapon('weapon', worldEl, this.x, this.y, 'dubina');
+    this.pickWeapon(weapon);
     stageEl.appendChild(heroEl);
 
 }
 
 function createMonster(stageEl, x, y, monsters) {
-    var monster = new Monster('blob'+monsters.length, stageEl, x, y);
+    var monster = new Monster('blob' + monsters.length, stageEl, x, y);
     monsters.push(monster);
     return monster;
 }
@@ -112,5 +119,7 @@ function Monster(id, stageEl, x, y, speed) {
 }
 
 export {
-Hero, createMonster, Monster
+    Hero,
+    createMonster,
+    Monster
 };

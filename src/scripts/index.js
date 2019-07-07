@@ -2,13 +2,6 @@ import '../styles/index.scss';
 import {Hero, createMonster, Monster} from './monster.js';
 import {createWeapon, Weapon} from './weapon.js';
 
-
-
-
-
-
-
-
 //main script
 
 window.addEventListener('load', function() {
@@ -21,7 +14,11 @@ window.addEventListener('load', function() {
     createMonster(gameWorld, 480, 600, monsters);
     createMonster(gameWorld, 80, 40, monsters);
 
-    var weapon = createWeapon(gameWorld);
+    var weapons = [];
+    createWeapon(gameWorld,'sword', 60, 190, weapons);
+    createWeapon(gameWorld,'dubina', 20, 80, weapons);
+
+
     stage.onmousemove = function(event) {
         hero.moveEvent(event);
 
@@ -31,8 +28,10 @@ window.addEventListener('load', function() {
         for (var i = 0; i< monsters.length ; i++) {
             hero.checkMonster(monsters[i]);
         }
-        hero.checkWeapon(weapon);
-    };
+        for (var i = 0; i< weapons.length ; i++) {
+            hero.checkWeapon(weapons[i]);
+        }
+        };
 
      setInterval(function() {
         hero.changeWorld();
