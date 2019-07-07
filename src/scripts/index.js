@@ -17,6 +17,8 @@ window.addEventListener('load', function() {
     var weapons = [];
     createWeapon(gameWorld,'sword', 60, 190, weapons);
     createWeapon(gameWorld,'dubina', 20, 80, weapons);
+    createWeapon(gameWorld,'catana', 150, 150, weapons);
+
 
 
     stage.onmousemove = function(event) {

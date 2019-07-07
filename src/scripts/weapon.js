@@ -16,6 +16,12 @@ const weapons = {
         radius: 115,
         damage: 20,
         duration:500,
+    },
+    catana: {
+        className: 'catana',
+        radius: 100,
+        damage: 20,
+        duration:200,
     }
 };
 

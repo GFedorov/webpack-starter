@@ -66,8 +66,28 @@ body {
     left: 5px;
     bottom: 0;
     transform: rotate(50deg);
-    transition: all 0.3s;
+    transition: all 0.5s;
     transform-origin: 0 0;
+}
+
+.catana {
+    width: 110px;
+    height: 40px;
+    background-image: url('../img/catana.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    position: absolute;
+    left: -5px;
+    bottom: -10px;
+    transform: rotate(50deg);
+    transition: all 0.2s;
+    transform-origin: 0 0;
+}
+
+.fight .catana {
+    top: 20px;
+    left:10px;
+    transform: rotate(150deg) ;
 }
 
 .fight .dubina {
