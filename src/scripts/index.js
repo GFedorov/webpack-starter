@@ -7,13 +7,23 @@ import {createWeapon, Weapon} from './weapon.js';
 window.addEventListener('load', function() {
     var stage = document.getElementById('stage');
     var gameWorld = document.getElementById('gameworld');
-    var hero = new Hero(gameworld, stage, 0, 0);
+    var game = {
+        stage: stage,
+        gameWorld: gameWorld,
+        w:1200,
+        h:1200,
+        stageWidth: 600,
+        stageHeight: 400,
+    };
+    var hero = new Hero(game, stage, 0, 0);
     var monsters = [];
-    createMonster(gameWorld, 300, 200, monsters);
-    createMonster(gameWorld, 200, 400, monsters);
+    for (var i = 0; i < 20; i++) {
+        createMonster(gameWorld, Math.floor(Math.random() * game.w), Math.floor(Math.random() * game.h), monsters);
+    }
+   /* createMonster(gameWorld, 200, 400, monsters);
     createMonster(gameWorld, 480, 600, monsters);
     createMonster(gameWorld, 80, 40, monsters);
-
+*/
     var weapons = [];
     createWeapon(gameWorld,'sword', 60, 190, weapons);
     createWeapon(gameWorld,'dubina', 20, 80, weapons);

@@ -1,7 +1,8 @@
 import { interSect } from './helper.js';
 import {Weapon} from './weapon.js';
 
-function Hero(worldEl, stageEl, x, y) {
+function Hero(game, stageEl, x, y) {
+    var worldEl = game.gameWorld;
     var me = this;
     this.x = x;
     this.y = y;
@@ -13,7 +14,7 @@ function Hero(worldEl, stageEl, x, y) {
     var backgroundPosY = 0;
     var deltaPosX = 0;
     var deltaPosY = 0;
-    var speedKoeff = 0.1;
+    var speedKoeff = 0.03;
     var stageCoords = stageEl.getBoundingClientRect();
     var centerX = Math.round(stageCoords.width / 2);
     var centerY = Math.round(stageCoords.height / 2);
@@ -63,7 +64,19 @@ function Hero(worldEl, stageEl, x, y) {
     this.changeWorld = function() {
         backgroundPosX = backgroundPosX - Math.round(deltaPosX);
         backgroundPosY = backgroundPosY - Math.round(deltaPosY);
-
+        console.log(backgroundPosX,backgroundPosY);
+        if(backgroundPosX > game.stageWidth/2){             
+            backgroundPosX = game.stageWidth/2;
+        }
+        if(backgroundPosY > game.stageHeight/2){             
+            backgroundPosY = game.stageHeight/2;
+        }
+        if(backgroundPosX < -game.w + game.stageWidth/2){             
+            backgroundPosX = -game.w + game.stageWidth/2;
+        }
+        if(backgroundPosY < -game.h + game.stageHeight/2){             
+            backgroundPosY = -game.h + game.stageHeight/2;
+        }
         hitRound.style.left = -backgroundPosX + centerX + 'px';
         hitRound.style.top = -backgroundPosY + centerY + 'px';
         worldEl.style.transform = 'translate(' + backgroundPosX + 'px, ' + backgroundPosY + 'px)';

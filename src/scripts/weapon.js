@@ -34,11 +34,15 @@ function Weapon(id, stageEl, x, y, type) {
     stageEl.appendChild(el);
     this.x = x;
     this.y = y;
-    this.id = id;    
+    this.id = id;  
+    this.isActive = true  
     this.destroy = function() {
         el.setAttribute("class", "fired");
         setTimeout(function() {
             stageEl.removeChild(el);
+            me.isActive = false;
+            me.x = -100;
+            me.y = -100;
         }, me.settings.duration);
     };
     this.draw = function() {
