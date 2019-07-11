@@ -24,6 +24,11 @@ const weapons = {
         duration:200,
     }
 };
+function getRandomWeapon(){
+var arWeapons = Object.keys(weapons);
+var num = Math.floor(Math.random() * arWeapons.length);
+return arWeapons[num];
+}
 
 function Weapon(id, stageEl, x, y, type) {
     var me = this;
@@ -54,4 +59,5 @@ function Weapon(id, stageEl, x, y, type) {
 }
 
 
-export {createWeapon, Weapon};
+export {createWeapon, Weapon, getRandomWeapon};
+

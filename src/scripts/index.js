@@ -1,6 +1,6 @@
 import '../styles/index.scss';
 import {Hero, createMonster, Monster} from './monster.js';
-import {createWeapon, Weapon} from './weapon.js';
+import {createWeapon, Weapon, getRandomWeapon} from './weapon.js';
 
 //main script
 
@@ -25,10 +25,9 @@ window.addEventListener('load', function() {
     createMonster(gameWorld, 80, 40, monsters);
 */
     var weapons = [];
-    createWeapon(gameWorld,'sword', 60, 190, weapons);
-    createWeapon(gameWorld,'dubina', 20, 80, weapons);
-    createWeapon(gameWorld,'catana', 150, 150, weapons);
-
+    for (var i = 0; i < 6; i++) {
+        createWeapon(gameWorld, getRandomWeapon(), Math.floor(Math.random() * game.w), Math.floor(Math.random() * game.h), weapons);
+    }
 
 
     stage.onmousemove = function(event) {

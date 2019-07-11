@@ -57,8 +57,10 @@ function Hero(game, stageEl, x, y) {
     };
     this.checkWeapon = function(weapon) {
         if (interSect({ x: -backgroundPosX + centerX, y: -backgroundPosY + centerY }, weapon, me.weapon.settings.radius)) {
-            me.pickWeapon(weapon);
-            }
+            setTimeout(function(){
+                me.pickWeapon(weapon);
+            }, 300)
+        }
 
     };
     this.changeWorld = function() {
