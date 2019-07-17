@@ -6,10 +6,13 @@ function Hero(game, stageEl, x, y) {
     var me = this;
     this.x = x;
     this.y = y;
+    this.xp = 0;
     var hitRound = document.querySelector('.hit-area');
     var heroEl = document.createElement('div');
     heroEl.setAttribute('id', 'hero');
     heroEl.setAttribute('class', 'main-hero');
+    var xpEl = document.querySelector('#info .hero-xp');
+    var levelEl = document.querySelector('#info .hero-level');
     var backgroundPosX = 0;
     var backgroundPosY = 0;
     var deltaPosX = 0;
@@ -18,7 +21,7 @@ function Hero(game, stageEl, x, y) {
     var stageCoords = stageEl.getBoundingClientRect();
     var centerX = Math.round(stageCoords.width / 2);
     var centerY = Math.round(stageCoords.height / 2);
-    this.moveEvent = function(event) {
+        this.moveEvent = function(event) {
         deltaPosX = (event.clientX - stageCoords.x - centerX) * speedKoeff;
         deltaPosY = (event.clientY - stageCoords.y - centerY) * speedKoeff;
         var angleTangens = deltaPosY / deltaPosX;
@@ -38,8 +41,8 @@ function Hero(game, stageEl, x, y) {
     };
     this.checkMonster = function(monster) {
         if (interSect({ x: -backgroundPosX + centerX, y: -backgroundPosY + centerY }, monster, me.weapon.settings.radius)) {
-             monster.damage(me.weapon.settings.damage);
-        };
+             me.updateXP(monster.damage(me.weapon.settings.damage));
+             };
 
     };
     this.pickWeapon = function(weapon){
@@ -63,6 +66,17 @@ function Hero(game, stageEl, x, y) {
         }
 
     };
+    this.getLevel = function(){
+        return Math.floor(Math.log(Math.floor(me.xp/100))/Math.log(2))
+    }
+    this.updateXP = function(score){
+        if (!score) {
+            return;
+        };
+        me.xp+=score;
+        xpEl.innerHTML = me.xp;
+        levelEl.innerHTML = me.getLevel();
+        };
     this.changeWorld = function() {
         backgroundPosX = backgroundPosX - Math.round(deltaPosX);
         backgroundPosY = backgroundPosY - Math.round(deltaPosY);
@@ -87,6 +101,9 @@ function Hero(game, stageEl, x, y) {
     var weapon = new Weapon('weapon', worldEl, this.x, this.y, 'dubina');
     this.pickWeapon(weapon);
     stageEl.appendChild(heroEl);
+    
+    
+
 
 }
 
@@ -132,9 +149,10 @@ function Monster(id, stageEl, x, y, speed) {
         me.hp -= points;
         if (me.hp <= 0){
             me.destroy();
-
+            return 100;    
         }else {
             me.drawHP();
+            return 0;
         }
     };
     this.destroy = function() {
