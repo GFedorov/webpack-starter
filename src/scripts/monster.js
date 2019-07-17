@@ -38,8 +38,8 @@ function Hero(game, stageEl, x, y) {
     };
     this.checkMonster = function(monster) {
         if (interSect({ x: -backgroundPosX + centerX, y: -backgroundPosY + centerY }, monster, me.weapon.settings.radius)) {
-            monster.destroy();
-        }
+             monster.damage(me.weapon.settings.damage);
+        };
 
     };
     this.pickWeapon = function(weapon){
@@ -59,14 +59,14 @@ function Hero(game, stageEl, x, y) {
         if (interSect({ x: -backgroundPosX + centerX, y: -backgroundPosY + centerY }, weapon, me.weapon.settings.radius)) {
             setTimeout(function(){
                 me.pickWeapon(weapon);
-            }, 300)
+            }, 300);
         }
 
     };
     this.changeWorld = function() {
         backgroundPosX = backgroundPosX - Math.round(deltaPosX);
         backgroundPosY = backgroundPosY - Math.round(deltaPosY);
-        console.log(backgroundPosX,backgroundPosY);
+       
         if(backgroundPosX > game.stageWidth/2){             
             backgroundPosX = game.stageWidth/2;
         }
@@ -99,11 +99,20 @@ function createMonster(stageEl, x, y, monsters) {
 function Monster(id, stageEl, x, y, speed) {
     var me = this;
     var el = document.createElement('div');
+    var elHealthWrapper = document.createElement('div');
+       elHealthWrapper.setAttribute('class', 'health'); 
+    var elHealthBar = document.createElement('div');
+       elHealthBar.setAttribute('class', 'health-bar');
+       el.appendChild(elHealthWrapper); 
+       elHealthWrapper.appendChild(elHealthBar);
+
+
     el.setAttribute('id', id);
     el.setAttribute('class', 'monster');
     stageEl.appendChild(el);
     this.x = x;
     this.y = y;
+    this.hp = 100;
     this.speed = speed || 10;
     // this.moveToObject = function(targetObject) {
     //   var deltaX = targetObject.x - me.x;
@@ -119,11 +128,24 @@ function Monster(id, stageEl, x, y, speed) {
     //     me.y += me.speed;
     //   }
     // }
+    this.damage = function(points){
+        me.hp -= points;
+        if (me.hp <= 0){
+            me.destroy();
+
+        }else {
+            me.drawHP();
+        }
+    };
     this.destroy = function() {
         el.classList.add("fired");
         setTimeout(function() {
             stageEl.removeChild(el);
         }, 1000);
+    };
+    this.drawHP = function() {
+      elHealthBar.style.width = me.hp + '%';
+        
     };
     this.draw = function() {
 

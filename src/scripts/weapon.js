@@ -7,20 +7,20 @@ const weapons = {
     sword: {
         className: 'sword',
         radius: 85,
-        damage: 10,
+        damage: 34,
         duration:300,
 
     },
     dubina: {
         className: 'dubina',
         radius: 115,
-        damage: 20,
+        damage: 100,
         duration:500,
     },
     catana: {
         className: 'catana',
         radius: 100,
-        damage: 20,
+        damage: 51,
         duration:200,
     }
 };
@@ -40,7 +40,7 @@ function Weapon(id, stageEl, x, y, type) {
     this.x = x;
     this.y = y;
     this.id = id;  
-    this.isActive = true  
+    this.isActive = true;  
     this.destroy = function() {
         el.setAttribute("class", "fired");
         setTimeout(function() {
