@@ -21,7 +21,12 @@ function Hero(game, stageEl, x, y) {
     var stageCoords = stageEl.getBoundingClientRect();
     var centerX = Math.round(stageCoords.width / 2);
     var centerY = Math.round(stageCoords.height / 2);
-        this.moveEvent = function(event) {
+    this.coordStageUpd = function(){
+        stageCoords = stageEl.getBoundingClientRect();
+        centerX = Math.round(stageCoords.width / 2);
+        centerY = Math.round(stageCoords.height / 2);
+    };
+    this.moveEvent = function(event) {
         deltaPosX = (event.clientX - stageCoords.x - centerX) * speedKoeff;
         deltaPosY = (event.clientY - stageCoords.y - centerY) * speedKoeff;
         var angleTangens = deltaPosY / deltaPosX;
@@ -67,8 +72,8 @@ function Hero(game, stageEl, x, y) {
 
     };
     this.getLevel = function(){
-        return Math.floor(Math.log(Math.floor(me.xp/100))/Math.log(2))
-    }
+        return Math.floor(Math.log(Math.floor(me.xp/100))/Math.log(2));
+    };
     this.updateXP = function(score){
         if (!score) {
             return;

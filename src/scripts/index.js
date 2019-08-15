@@ -49,4 +49,7 @@ window.addEventListener('load', function() {
 
 
     }, 50);
+     window.onresize = function(){
+        hero.coordStageUpd();
+     };
 });
