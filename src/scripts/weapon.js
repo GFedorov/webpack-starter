@@ -9,6 +9,7 @@ const weapons = {
         radius: 85,
         damage: 34,
         duration:300,
+        angle:45
 
     },
     dubina: {
@@ -16,12 +17,14 @@ const weapons = {
         radius: 115,
         damage: 100,
         duration:500,
+        angle:90
     },
     catana: {
         className: 'catana',
         radius: 100,
         damage: 51,
         duration:200,
+        angle:55
     }
 };
 function getRandomWeapon(){

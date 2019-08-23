@@ -1,5 +1,6 @@
-import { interSect } from './helper.js';
+import { interSect, getAngle,checkAngle } from './helper.js';
 import {Weapon} from './weapon.js';
+
 
 function Hero(game, stageEl, x, y) {
     var worldEl = game.gameWorld;
@@ -21,6 +22,7 @@ function Hero(game, stageEl, x, y) {
     var stageCoords = stageEl.getBoundingClientRect();
     var centerX = Math.round(stageCoords.width / 2);
     var centerY = Math.round(stageCoords.height / 2);
+    var heroAngle = 0;
     this.coordStageUpd = function(){
         stageCoords = stageEl.getBoundingClientRect();
         centerX = Math.round(stageCoords.width / 2);
@@ -29,13 +31,8 @@ function Hero(game, stageEl, x, y) {
     this.moveEvent = function(event) {
         deltaPosX = (event.clientX - stageCoords.x - centerX) * speedKoeff;
         deltaPosY = (event.clientY - stageCoords.y - centerY) * speedKoeff;
-        var angleTangens = deltaPosY / deltaPosX;
-        var angle = Math.atan(angleTangens) * 180 / Math.PI;
-        if (deltaPosX < 0) {
-            angle = angle + 180;
-        }
-        angle = angle - 90;
-        heroEl.style.transform = 'translate(-50%,-50%) rotate(' + angle + 'deg)';
+        heroAngle = getAngle(deltaPosX, deltaPosY);
+        heroEl.style.transform = 'translate(-50%,-50%) rotate(' + heroAngle + 'deg)';
     };
     this.fight = function() {
         heroEl.classList.add('fight');
@@ -46,8 +43,11 @@ function Hero(game, stageEl, x, y) {
     };
     this.checkMonster = function(monster) {
         if (interSect({ x: -backgroundPosX + centerX, y: -backgroundPosY + centerY }, monster, me.weapon.settings.radius)) {
-             me.updateXP(monster.damage(me.weapon.settings.damage));
-             };
+            if ( checkAngle({ x: -backgroundPosX + centerX, y: -backgroundPosY + centerY }, monster, heroAngle, me.weapon.settings.angle)){
+                me.updateXP(monster.damage(me.weapon.settings.damage));
+            }
+
+        };
 
     };
     this.pickWeapon = function(weapon){
