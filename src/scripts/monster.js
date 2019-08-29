@@ -1,5 +1,5 @@
-import { interSect, getAngle,checkAngle } from './helper.js';
-import {Weapon} from './weapon.js';
+import { interSect, getAngle, checkAngle } from './helper.js';
+import { Weapon } from './weapon.js';
 
 
 function Hero(game, stageEl, x, y) {
@@ -23,7 +23,7 @@ function Hero(game, stageEl, x, y) {
     var centerX = Math.round(stageCoords.width / 2);
     var centerY = Math.round(stageCoords.height / 2);
     var heroAngle = 0;
-    this.coordStageUpd = function(){
+    this.coordStageUpd = function() {
         stageCoords = stageEl.getBoundingClientRect();
         centerX = Math.round(stageCoords.width / 2);
         centerY = Math.round(stageCoords.height / 2);
@@ -43,84 +43,83 @@ function Hero(game, stageEl, x, y) {
     };
     this.checkMonster = function(monster) {
         if (interSect({ x: -backgroundPosX + centerX, y: -backgroundPosY + centerY }, monster, me.weapon.settings.radius)) {
-            if ( checkAngle({ x: -backgroundPosX + centerX, y: -backgroundPosY + centerY }, monster, heroAngle, me.weapon.settings.angle)){
+            if (checkAngle({ x: -backgroundPosX + centerX, y: -backgroundPosY + centerY }, monster, heroAngle, me.weapon.settings.angle)) {
                 me.updateXP(monster.damage(me.weapon.settings.damage));
             }
 
         };
 
     };
-    this.pickWeapon = function(weapon){
+    this.pickWeapon = function(weapon) {
         var el = document.createElement('div');
-            el.setAttribute('id', weapon.id);
-            el.setAttribute('class', weapon.settings.className);
-            stageEl.appendChild(el);
-            heroEl.innerHTML = '';
-            heroEl.appendChild(el);
-            me.weapon = weapon;
-            hitRound.style.width = me.weapon.settings.radius * 2 + 'px';
-            hitRound.style.height = me.weapon.settings.radius * 2 + 'px';
-            weapon.destroy();
+        el.setAttribute('id', weapon.id);
+        el.setAttribute('class', weapon.settings.className);
+        stageEl.appendChild(el);
+        heroEl.innerHTML = '';
+        heroEl.appendChild(el);
+        me.weapon = weapon;
+        hitRound.style.width = me.weapon.settings.radius * 2 + 'px';
+        hitRound.style.height = me.weapon.settings.radius * 2 + 'px';
+        weapon.destroy();
 
     };
     this.checkWeapon = function(weapon) {
         if (interSect({ x: -backgroundPosX + centerX, y: -backgroundPosY + centerY }, weapon, me.weapon.settings.radius)) {
-            setTimeout(function(){
+            setTimeout(function() {
                 me.pickWeapon(weapon);
             }, 300);
         }
 
     };
-    this.getLevel = function(){
-        return Math.floor(Math.log(Math.floor(me.xp/100))/Math.log(2));
+    this.getLevel = function() {
+        return Math.floor(Math.log(Math.floor(me.xp / 100)) / Math.log(2));
     };
-    this.updateXP = function(score){
+    this.updateXP = function(score) {
         if (!score) {
             return;
         };
-        me.xp+=score;
+        me.xp += score;
         xpEl.innerHTML = me.xp;
         levelEl.innerHTML = me.getLevel();
-        };
+    };
     this.changeWorld = function() {
-        console.log(- backgroundPosX + 300, -backgroundPosY + 200);
         backgroundPosX = backgroundPosX - Math.round(deltaPosX);
         backgroundPosY = backgroundPosY - Math.round(deltaPosY);
-       
-        if(backgroundPosX > game.stageWidth/2){             
-            backgroundPosX = game.stageWidth/2;
+
+        if (backgroundPosX > game.stageWidth / 2) {
+            backgroundPosX = game.stageWidth / 2;
         }
-        if(backgroundPosY > game.stageHeight/2){             
-            backgroundPosY = game.stageHeight/2;
+        if (backgroundPosY > game.stageHeight / 2) {
+            backgroundPosY = game.stageHeight / 2;
         }
-        if(backgroundPosX < -game.w + game.stageWidth/2){             
-            backgroundPosX = -game.w + game.stageWidth/2;
+        if (backgroundPosX < -game.w + game.stageWidth / 2) {
+            backgroundPosX = -game.w + game.stageWidth / 2;
         }
-        if(backgroundPosY < -game.h + game.stageHeight/2){             
-            backgroundPosY = -game.h + game.stageHeight/2;
+        if (backgroundPosY < -game.h + game.stageHeight / 2) {
+            backgroundPosY = -game.h + game.stageHeight / 2;
         }
         hitRound.style.left = -backgroundPosX + centerX + 'px';
         hitRound.style.top = -backgroundPosY + centerY + 'px';
         worldEl.style.transform = 'translate(' + backgroundPosX + 'px, ' + backgroundPosY + 'px)';
 
     };
-    this.getPosX = function(){
-        return - backgroundPosX + 300;
+    this.getPosX = function() {
+        return -backgroundPosX + centerX;
     };
-    this.getPosY = function(){
-        return -backgroundPosY + 200;
+    this.getPosY = function() {
+        return -backgroundPosY + centerY;
     };
     var weapon = new Weapon('weapon', worldEl, this.x, this.y, 'dubina');
     this.pickWeapon(weapon);
     stageEl.appendChild(heroEl);
-    
-    
+
+
 
 
 }
 
-function createMonster(stageEl, x, y,speed, monsters) {
-    var monster = new Monster('blob' + monsters.length, stageEl, x, y,speed);
+function createMonster(stageEl, x, y, speed, monsters) {
+    var monster = new Monster('blob' + monsters.length, stageEl, x, y, speed);
     monsters.push(monster);
     return monster;
 }
@@ -129,15 +128,19 @@ function Monster(id, stageEl, x, y, speed) {
     var me = this;
     var el = document.createElement('div');
     var elHealthWrapper = document.createElement('div');
-       elHealthWrapper.setAttribute('class', 'health'); 
+    elHealthWrapper.setAttribute('class', 'health');
     var elHealthBar = document.createElement('div');
-       elHealthBar.setAttribute('class', 'health-bar');
-       el.appendChild(elHealthWrapper); 
-       elHealthWrapper.appendChild(elHealthBar);
+    elHealthBar.setAttribute('class', 'health-bar');
+    el.appendChild(elHealthWrapper);
+    elHealthWrapper.appendChild(elHealthBar);
 
 
     el.setAttribute('id', id);
-    el.setAttribute('class', 'monster');
+    el.setAttribute('class', 'blob');
+    var monsterEl = document.createElement('div');
+    monsterEl.setAttribute('class', 'monster');
+    el.appendChild(monsterEl);
+
     stageEl.appendChild(el);
     this.x = x;
     this.y = y;
@@ -146,32 +149,12 @@ function Monster(id, stageEl, x, y, speed) {
     var monsterAngle = 0;
     var deltaPosX = 0;
     var deltaPosY = 0;
-    // this.moveToObject = function(targetObject) {
-    //   var deltaX = targetObject.x - me.x;
-    //   var deltaY = targetObject.y - me.y;
-    //   if (deltaX < 0) {
-    //     me.x -= me.speed;
-    //   } else {
-    //     me.x += me.speed;
-    //   }
-    //   if (deltaY < 0) {
-    //     me.y -= me.speed;
-    //   } else {
-    //     me.y += me.speed;
-    //   }
-    // }
-    this.moveEvent = function(hero) {
-        deltaPosX = me.x - hero.getPosX();
-        deltaPosY = me.y - hero.getPosY();
-        monsterAngle = getAngle(deltaPosX, deltaPosY) + 180;
-        el.style.transform = 'translate(-50%,-50%) rotate(' + monsterAngle + 'deg)';
-    };
-    this.damage = function(points){
+    this.damage = function(points) {
         me.hp -= points;
-        if (me.hp <= 0){
+        if (me.hp <= 0) {
             me.destroy();
-            return 100;    
-        }else {
+            return 100;
+        } else {
             me.drawHP();
             return 0;
         }
@@ -183,13 +166,17 @@ function Monster(id, stageEl, x, y, speed) {
         }, 1000);
     };
     this.drawHP = function() {
-      elHealthBar.style.width = me.hp + '%';
-        
+        elHealthBar.style.width = me.hp + '%';
+
     };
-    this.move = function(hero){
-        me.moveEvent(hero);
-        me.x-= deltaPosX * 0.01 * me.speed;
-        me.y-= deltaPosY * 0.01 * me.speed;
+    this.move = function(hero) {
+        deltaPosX = hero.getPosX() - me.x;
+        deltaPosY = hero.getPosY() - me.y;
+        monsterAngle = getAngle(deltaPosX, deltaPosY);
+        monsterEl.style.transform = 'rotate(' + monsterAngle + 'deg)';
+
+        me.x += me.speed * Math.abs(Math.cos(monsterAngle)) * (deltaPosX > 0 ? 1 : -1);
+        me.y += me.speed * Math.abs(Math.sin(monsterAngle)) * (deltaPosY > 0 ? 1 : -1);
     };
     this.draw = function() {
 

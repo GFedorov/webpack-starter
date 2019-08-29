@@ -1,5 +1,5 @@
 function createWeapon(stageEl, type, x, y, weapons) {
-    var weapon = new Weapon('weapon'+weapons.length, stageEl, x, y, type);
+    var weapon = new Weapon('weapon' + weapons.length, stageEl, x, y, type);
     weapons.push(weapon);
     return weapon;
 }
@@ -8,29 +8,30 @@ const weapons = {
         className: 'sword',
         radius: 85,
         damage: 34,
-        duration:300,
-        angle:45
+        duration: 300,
+        angle: 45
 
     },
     dubina: {
         className: 'dubina',
         radius: 115,
         damage: 100,
-        duration:500,
-        angle:90
+        duration: 500,
+        angle: 90
     },
     catana: {
         className: 'catana',
         radius: 100,
         damage: 51,
-        duration:200,
-        angle:55
+        duration: 200,
+        angle: 55
     }
 };
-function getRandomWeapon(){
-var arWeapons = Object.keys(weapons);
-var num = Math.floor(Math.random() * arWeapons.length);
-return arWeapons[num];
+
+function getRandomWeapon() {
+    var arWeapons = Object.keys(weapons);
+    var num = Math.floor(Math.random() * arWeapons.length);
+    return arWeapons[num];
 }
 
 function Weapon(id, stageEl, x, y, type) {
@@ -42,8 +43,8 @@ function Weapon(id, stageEl, x, y, type) {
     stageEl.appendChild(el);
     this.x = x;
     this.y = y;
-    this.id = id;  
-    this.isActive = true;  
+    this.id = id;
+    this.isActive = true;
     this.destroy = function() {
         el.setAttribute("class", "fired");
         setTimeout(function() {
@@ -62,5 +63,4 @@ function Weapon(id, stageEl, x, y, type) {
 }
 
 
-export {createWeapon, Weapon, getRandomWeapon};
-
+export { createWeapon, Weapon, getRandomWeapon };

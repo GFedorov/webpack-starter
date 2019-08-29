@@ -43,17 +43,16 @@ body {
     background-size: contain;
     background-repeat: no-repeat;
     position: absolute;
-    left: -5px;
-    bottom: 0;
-    transform: rotate(50deg);
+    left: 50%;
+    top: 50%;
+    transform: translate(-30%, 20%) rotate(-45deg);
     transition: all 0.3s;
-    transform-origin: 0 0;
 }
 
 
 
 .fight .sword {
-    transform: rotate(150deg) ;
+    transform: translate(0%, -25%) rotate(-30deg);
 }
 
 
@@ -64,37 +63,36 @@ body {
     background-size: contain;
     background-repeat: no-repeat;
     position: absolute;
-    left: 5px;
-    bottom: 0;
-    transform: rotate(50deg);
+    bottom: 5px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-30%, -50%) rotate(57deg);
     transition: all 0.5s;
-    transform-origin: 0 0;
+}
+
+.fight .dubina {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -150%) rotate(-58deg);
 }
 
 .catana {
-    width: 110px;
     height: 40px;
+    width: 110px;
     background-image: url('../img/catana.png');
     background-size: contain;
     background-repeat: no-repeat;
     position: absolute;
-    left: -5px;
-    bottom: -10px;
-    transform: rotate(50deg);
+    left: 50%;
+    top: 50%;
+    transform: translate(-15%, -50%) rotate(-50deg);
     transition: all 0.2s;
-    transform-origin: 0 0;
 }
 
 .fight .catana {
     top: 20px;
     left:10px;
-    transform: rotate(150deg) ;
-}
-
-.fight .dubina {
-    top: 20px;
-    left:35px;
-    transform: rotate(150deg) ;
+    transform: translate(-5%, 60%) rotate(15deg);
 }
 
 .hit-area {
@@ -107,13 +105,20 @@ body {
     transform: translate(-50%, -50%);
 }
 
-.monster {
-    width: 60px;
-    height: 50px;
-    background-image: url('../img/bullHero.png');
-    background-size: contain;
-    position: absolute;
+
+
+.blob {
+    width: 45px;
+    height: 60px;
+    .monster {
+        width: 45px;
+        height: 60px;
+        background-image: url('../img/bullHero.png');
+        background-size: contain;
+        position: absolute;
+    }
     transform: translate(-50%, -50%);
+    position: absolute;
     background-repeat: no-repeat;
     transition: all 0.5s;
 
@@ -127,7 +132,9 @@ body {
         height: 5px;
         background-color: black;
         position: absolute;
+        left: 50%;
         top:-5px;
+        transform: translateX(-50%);
         .health-bar {
             width: 100%;
             height: 100%;
