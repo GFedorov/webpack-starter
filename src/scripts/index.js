@@ -18,7 +18,7 @@ window.addEventListener('load', function() {
     var hero = new Hero(game, stage, 0, 0);
     var monsters = [];
     for (var i = 0; i < 20; i++) {
-        createMonster(gameWorld, Math.floor(Math.random() * game.w), Math.floor(Math.random() * game.h), monsters);
+        createMonster(gameWorld, Math.floor(Math.random() * game.w), Math.floor(Math.random() * game.h),i%5, monsters);
     }
    /* createMonster(gameWorld, 200, 400, monsters);
     createMonster(gameWorld, 480, 600, monsters);
@@ -46,7 +46,10 @@ window.addEventListener('load', function() {
 
      setInterval(function() {
         hero.changeWorld();
-
+        for (var i = 0; i< monsters.length ; i++) {
+            monsters[i].move(hero);
+            monsters[i].draw();
+        }
 
     }, 50);
      window.onresize = function(){

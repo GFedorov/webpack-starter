@@ -83,6 +83,7 @@ function Hero(game, stageEl, x, y) {
         levelEl.innerHTML = me.getLevel();
         };
     this.changeWorld = function() {
+        console.log(- backgroundPosX + 300, -backgroundPosY + 200);
         backgroundPosX = backgroundPosX - Math.round(deltaPosX);
         backgroundPosY = backgroundPosY - Math.round(deltaPosY);
        
@@ -103,6 +104,12 @@ function Hero(game, stageEl, x, y) {
         worldEl.style.transform = 'translate(' + backgroundPosX + 'px, ' + backgroundPosY + 'px)';
 
     };
+    this.getPosX = function(){
+        return - backgroundPosX + 300;
+    };
+    this.getPosY = function(){
+        return -backgroundPosY + 200;
+    };
     var weapon = new Weapon('weapon', worldEl, this.x, this.y, 'dubina');
     this.pickWeapon(weapon);
     stageEl.appendChild(heroEl);
@@ -112,8 +119,8 @@ function Hero(game, stageEl, x, y) {
 
 }
 
-function createMonster(stageEl, x, y, monsters) {
-    var monster = new Monster('blob' + monsters.length, stageEl, x, y);
+function createMonster(stageEl, x, y,speed, monsters) {
+    var monster = new Monster('blob' + monsters.length, stageEl, x, y,speed);
     monsters.push(monster);
     return monster;
 }
@@ -136,6 +143,9 @@ function Monster(id, stageEl, x, y, speed) {
     this.y = y;
     this.hp = 100;
     this.speed = speed || 10;
+    var monsterAngle = 0;
+    var deltaPosX = 0;
+    var deltaPosY = 0;
     // this.moveToObject = function(targetObject) {
     //   var deltaX = targetObject.x - me.x;
     //   var deltaY = targetObject.y - me.y;
@@ -150,6 +160,12 @@ function Monster(id, stageEl, x, y, speed) {
     //     me.y += me.speed;
     //   }
     // }
+    this.moveEvent = function(hero) {
+        deltaPosX = me.x - hero.getPosX();
+        deltaPosY = me.y - hero.getPosY();
+        monsterAngle = getAngle(deltaPosX, deltaPosY) + 180;
+        el.style.transform = 'translate(-50%,-50%) rotate(' + monsterAngle + 'deg)';
+    };
     this.damage = function(points){
         me.hp -= points;
         if (me.hp <= 0){
@@ -169,6 +185,11 @@ function Monster(id, stageEl, x, y, speed) {
     this.drawHP = function() {
       elHealthBar.style.width = me.hp + '%';
         
+    };
+    this.move = function(hero){
+        me.moveEvent(hero);
+        me.x-= deltaPosX * 0.01 * me.speed;
+        me.y-= deltaPosY * 0.01 * me.speed;
     };
     this.draw = function() {
 
