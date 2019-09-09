@@ -8,6 +8,7 @@ function Hero(game, stageEl, x, y) {
     this.x = x;
     this.y = y;
     this.xp = 0;
+    this.hp = 100;
     var hitRound = document.querySelector('.hit-area');
     var heroEl = document.createElement('div');
     heroEl.setAttribute('id', 'hero');
@@ -51,6 +52,9 @@ function Hero(game, stageEl, x, y) {
 
     };
     this.pickWeapon = function(weapon) {
+        if(!weapon.isActive){
+            return false;
+        }
         var el = document.createElement('div');
         el.setAttribute('id', weapon.id);
         el.setAttribute('class', weapon.settings.className);
@@ -109,9 +113,26 @@ function Hero(game, stageEl, x, y) {
     this.getPosY = function() {
         return -backgroundPosY + centerY;
     };
+    this.damage = function(points) {
+        me.hp -= points;
+        if (me.hp <= 0) {
+            me.destroy();
+            return 100;
+        } else {
+            //me.drawHP();
+            return 0;
+        }
+    };
+    this.destroy = function() {
+        heroEl.classList.add("fired");
+        setTimeout(function() {
+            stageEl.removeChild(heroEl);
+        }, 1000);
+    };
     var weapon = new Weapon('weapon', worldEl, this.x, this.y, 'dubina');
     this.pickWeapon(weapon);
     stageEl.appendChild(heroEl);
+
 
 
 
@@ -133,6 +154,7 @@ function Monster(id, stageEl, x, y, speed) {
     elHealthBar.setAttribute('class', 'health-bar');
     el.appendChild(elHealthWrapper);
     elHealthWrapper.appendChild(elHealthBar);
+    this.active = true;
 
 
     el.setAttribute('id', id);
@@ -147,9 +169,13 @@ function Monster(id, stageEl, x, y, speed) {
     this.hp = 100;
     this.speed = speed || 10;
     var monsterAngle = 0;
+    var prevAngle = 0;
     var deltaPosX = 0;
     var deltaPosY = 0;
     this.damage = function(points) {
+        if (!me.active){
+            return false;
+        }
         me.hp -= points;
         if (me.hp <= 0) {
             me.destroy();
@@ -160,10 +186,29 @@ function Monster(id, stageEl, x, y, speed) {
         }
     };
     this.destroy = function() {
+        if (!me.active){
+            return false;
+        }
+        me.active = false;
         el.classList.add("fired");
         setTimeout(function() {
             stageEl.removeChild(el);
         }, 1000);
+    };
+    this.fight = function(hero){
+        if (!me.active){
+            return false;
+        }
+        if (!interSect({x:hero.getPosX(),y:hero.getPosY()}, me, 50)){
+            console.log(false);
+            return false ;
+        }
+        console.log(true);
+        el.classList.add('hostile');
+        setTimeout(function(){
+            el.classList.remove('hostile');
+        }, 500);
+        hero.damage(2);
     };
     this.drawHP = function() {
         elHealthBar.style.width = me.hp + '%';
@@ -173,6 +218,10 @@ function Monster(id, stageEl, x, y, speed) {
         deltaPosX = hero.getPosX() - me.x;
         deltaPosY = hero.getPosY() - me.y;
         monsterAngle = getAngle(deltaPosX, deltaPosY);
+        if (prevAngle && Math.abs(monsterAngle - prevAngle)>60){
+            monsterAngle = prevAngle;
+        };
+        prevAngle = monsterAngle;
         monsterEl.style.transform = 'rotate(' + monsterAngle + 'deg)';
 
         me.x += me.speed * Math.abs(Math.cos(monsterAngle)) * (deltaPosX > 0 ? 1 : -1);

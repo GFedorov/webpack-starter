@@ -52,6 +52,14 @@ window.addEventListener('load', function() {
         }
 
     }, 50);
+    setInterval(function() {
+        for (var i = 0; i < monsters.length; i++) {
+            monsters[i].fight(hero);
+            
+        }
+
+    }, 1000);
+
     window.onresize = function() {
         hero.coordStageUpd();
     };

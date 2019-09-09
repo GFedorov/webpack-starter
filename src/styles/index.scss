@@ -126,6 +126,13 @@ body {
         transform: translate(-50%, -50%) scale(0.0003);
         opacity: 0;
     }
+    &.hostile{
+        width:60px;
+        .monster{
+            width:60px;
+            background-image: url('../img/bullFight.png');
+        }
+    }
 
     .health {
         width: 60px;
