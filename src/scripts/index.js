@@ -14,7 +14,34 @@ window.addEventListener('load', function() {
         h: 1200,
         stageWidth: 600,
         stageHeight: 400,
+        active : true,
     };
+    //@TODO - Move
+    var restartElement = document.getElementById('restart');
+    restartElement.onclick = function(){
+        game.active = !game.active;
+        if (game.active) {
+            restartElement.innerHTML = "Stop";
+        }
+        else{ 
+            restartElement.innerHTML = "Start";
+        }
+
+    };
+    var popup = document.getElementById('popup');
+    game.showPopup = function(popupText, callback){
+        popup.style.display = 'block';
+        game.active = false;
+        popup.innerHTML = `<div>${popupText} </div>`;
+        popup.onclick = function (){
+            popup.style.display = 'none';
+            callback();
+        };
+
+
+    };
+    //end TODO
+
     var hero = new Hero(game, stage, 0, 0);
     var monsters = [];
     for (var i = 0; i < 20; i++) {
@@ -45,6 +72,9 @@ window.addEventListener('load', function() {
     };
 
     setInterval(function() {
+        if (game.active != true){
+            return false;
+        }
         hero.changeWorld();
         for (var i = 0; i < monsters.length; i++) {
             monsters[i].move(hero);
@@ -53,9 +83,12 @@ window.addEventListener('load', function() {
 
     }, 50);
     setInterval(function() {
+        if (game.active != true){
+            return false;
+        }
         for (var i = 0; i < monsters.length; i++) {
             monsters[i].fight(hero);
-            
+        
         }
 
     }, 1000);

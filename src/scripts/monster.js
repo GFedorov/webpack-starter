@@ -125,6 +125,9 @@ function Hero(game, stageEl, x, y) {
     };
     this.destroy = function() {
         heroEl.classList.add("fired");
+        game.showPopup('Game over', function(){
+            //game.reload
+        });
         setTimeout(function() {
             stageEl.removeChild(heroEl);
         }, 1000);

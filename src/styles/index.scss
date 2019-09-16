@@ -17,6 +17,20 @@ body {
 
 
 }
+#popup{
+    display: none;
+    width: 400px;
+    height: 200px;
+    font-size: 40px;
+    transform: translate(-50%,-50%);
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    cursor: pointer;
+    background-color: black;
+    color: red;
+    font-weight: bold;
+}
 
 #gameworld {
     background: url('../img/tile.png');
