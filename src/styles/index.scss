@@ -1,7 +1,8 @@
-$body-color: green;
+@import 'variables';
+@import 'ui';
 
 body {
-    color: $body-color;
+    background-color: $body-color;
     overflow: hidden;
 }
 
@@ -14,22 +15,6 @@ body {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-
-
-}
-#popup{
-    display: none;
-    width: 400px;
-    height: 200px;
-    font-size: 40px;
-    transform: translate(-50%,-50%);
-    position: fixed;
-    left: 50%;
-    top: 50%;
-    cursor: pointer;
-    background-color: black;
-    color: red;
-    font-weight: bold;
 }
 
 #gameworld {
@@ -163,8 +148,4 @@ body {
 
         }   
     }
-}
-.hero-xp{
-    font-size: 25px;
-    color: blue;
 }

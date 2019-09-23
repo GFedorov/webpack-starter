@@ -8,20 +8,40 @@
 
 <body>
   <div id="info">
-    <div>xp: <span class="hero-xp"></span></div>
-    <div class="xp-bar"> <div class="xp-score" ></div>
-    <div id="restart">Stop</div>
-    level: <span class="hero-level"></span></div>
-  </div>
-    <div id="stage">
-    	
-       <div id="gameworld">
-       	<div class="hit-area">
-       		
-       	</div>
-       </div> 
+    <div id="restart" class="circle">Stop</div>
+    <div id="hero-xp-wrapper">
+      xp: <span class="hero-xp">0</span>
     </div>
-    <div id="popup"></div>
+    <div class="xp-bar">
+      <div class="xp-score"></div>
+    </div>
+    <div id="level-wrapper" class="circle">
+      <span class="hero-level">0</span>
+      Lvl
+    </div>
+  </div>
+
+  <div id="quests" class="sidebar">
+    <h3>quest</h3>
+    <div class="title"></div>
+    <div class="description"></div>
+    <div class="info"></div>
+  </div>
+
+  <div id="inventory" class="sidebar">
+    <h3>inventory</h3>
+    <div class="weapon">
+      <div class="img"></div>
+      <div class="info"></div>
+    </div>
+  </div>
+
+  <div id="stage">
+     <div id="gameworld">
+     	<div class="hit-area"></div>
+     </div> 
+  </div>
+  <div id="popup"></div>
 </body>
 
 </html>

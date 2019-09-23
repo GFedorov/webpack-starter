@@ -1,0 +1,83 @@
+#popup{
+    display: none;
+    width: 400px;
+    height: 200px;
+    font-size: 40px;
+    transform: translate(-50%,-50%);
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    cursor: pointer;
+    background-color: black;
+    color: red;
+    font-weight: bold;
+}
+
+#info {
+    position: absolute;
+    width: 300px;
+    height: 50px;
+    left: 50%;
+    top: 10px;
+    transform: translateX(-50%);
+    z-index: 1;
+    background-color: blue;
+    border: 3px solid #aaa;
+    color: #fff;
+    font-weight: bold;
+    .circle {
+        position: absolute;
+        top: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: 3px solid #aaa;
+    }
+    #restart {
+        left: 0;
+        background-color: red;
+        transform: translateX(-110%);
+    }
+    #level-wrapper {
+        right: 0;
+        background-color: green;
+        color: #fff;
+        transform: translateX(110%);
+        justify-content: space-evenly;
+    }
+    #hero-xp-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        .hero-xp {
+            font-size: 25px;
+            margin-left: 10px;
+        }
+    }
+}
+
+.sidebar {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 3px solid #aaa;
+    color: #fff;
+    width: 200px;
+    height: 400px;
+    z-index: 1;
+    text-align: center;
+}
+
+#quests {
+    left: 20px;
+    background-color: green;
+}
+
+#inventory {
+    right: 20px;
+    background-color: green;
+}

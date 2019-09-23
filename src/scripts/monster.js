@@ -221,11 +221,18 @@ function Monster(id, stageEl, x, y, speed) {
         deltaPosX = hero.getPosX() - me.x;
         deltaPosY = hero.getPosY() - me.y;
         monsterAngle = getAngle(deltaPosX, deltaPosY);
-        if (prevAngle && Math.abs(monsterAngle - prevAngle)>60){
+        if (prevAngle
+            && Math.abs(monsterAngle - prevAngle)>60
+            && Math.abs(monsterAngle - prevAngle)<170
+        ){
             monsterAngle = prevAngle;
         };
         prevAngle = monsterAngle;
         monsterEl.style.transform = 'rotate(' + monsterAngle + 'deg)';
+
+        if(Math.abs(deltaPosX) < 10 && Math.abs(deltaPosY) < 10) {
+            return;
+        }
 
         me.x += me.speed * Math.abs(Math.cos(monsterAngle)) * (deltaPosX > 0 ? 1 : -1);
         me.y += me.speed * Math.abs(Math.sin(monsterAngle)) * (deltaPosY > 0 ? 1 : -1);
