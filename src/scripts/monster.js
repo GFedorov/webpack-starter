@@ -13,8 +13,7 @@ function Hero(game, stageEl, x, y) {
     var heroEl = document.createElement('div');
     heroEl.setAttribute('id', 'hero');
     heroEl.setAttribute('class', 'main-hero');
-    var xpEl = document.querySelector('#info .hero-xp');
-    var levelEl = document.querySelector('#info .hero-level');
+    
     var backgroundPosX = 0;
     var backgroundPosY = 0;
     var deltaPosX = 0;
@@ -83,8 +82,9 @@ function Hero(game, stageEl, x, y) {
             return;
         };
         me.xp += score;
-        xpEl.innerHTML = me.xp;
-        levelEl.innerHTML = me.getLevel();
+        game.updateXP(me.xp);
+        game.updateLevel(me.getLevel());
+        
     };
     this.changeWorld = function() {
         backgroundPosX = backgroundPosX - Math.round(deltaPosX);
@@ -115,6 +115,7 @@ function Hero(game, stageEl, x, y) {
     };
     this.damage = function(points) {
         me.hp -= points;
+        game.updateHp(me.hp);
         if (me.hp <= 0) {
             me.destroy();
             return 100;

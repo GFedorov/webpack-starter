@@ -1,46 +1,15 @@
 import '../styles/index.scss';
 import { Hero, createMonster, Monster } from './monster.js';
-import { createWeapon, Weapon, getRandomWeapon } from './weapon.js';
-
-//main script
+import { createWeapon, Weapon, getRandomWeapon,weapons } from './weapon.js';
+import {Game} from './game.js';
+//main script;
 
 window.addEventListener('load', function() {
     var stage = document.getElementById('stage');
     var gameWorld = document.getElementById('gameworld');
-    var game = {
-        stage: stage,
-        gameWorld: gameWorld,
-        w: 1200,
-        h: 1200,
-        stageWidth: 600,
-        stageHeight: 400,
-        active : true,
-    };
-    //@TODO - Move
-    var restartElement = document.getElementById('restart');
-    restartElement.onclick = function(){
-        game.active = !game.active;
-        if (game.active) {
-            restartElement.innerHTML = "Stop";
-        }
-        else{ 
-            restartElement.innerHTML = "Start";
-        }
+    var game = new Game(stage, gameWorld);
 
-    };
-    var popup = document.getElementById('popup');
-    game.showPopup = function(popupText, callback){
-        popup.style.display = 'block';
-        game.active = false;
-        popup.innerHTML = `<div>${popupText} </div>`;
-        popup.onclick = function (){
-            popup.style.display = 'none';
-            callback();
-        };
-
-
-    };
-    //end TODO
+    game.updateInventory(weapons.dubina.className,weapons.dubina.info);
 
     var hero = new Hero(game, stage, 0, 0);
     var monsters = [];

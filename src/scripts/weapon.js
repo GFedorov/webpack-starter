@@ -9,7 +9,8 @@ const weapons = {
         radius: 85,
         damage: 34,
         duration: 300,
-        angle: 45
+        angle: 45,
+        info: 'toothpick',
 
     },
     dubina: {
@@ -17,14 +18,16 @@ const weapons = {
         radius: 115,
         damage: 100,
         duration: 500,
-        angle: 90
+        angle: 90,
+        info: 'imba',
     },
     catana: {
         className: 'catana',
         radius: 100,
         damage: 51,
         duration: 200,
-        angle: 55
+        angle: 55,
+        info: 'feel yourself like samurai',
     }
 };
 
@@ -63,4 +66,9 @@ function Weapon(id, stageEl, x, y, type) {
 }
 
 
-export { createWeapon, Weapon, getRandomWeapon };
+export { 
+    createWeapon, 
+    Weapon, 
+    getRandomWeapon,
+    weapons
+};
