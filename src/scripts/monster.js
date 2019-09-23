@@ -63,8 +63,8 @@ function Hero(game, stageEl, x, y) {
         me.weapon = weapon;
         hitRound.style.width = me.weapon.settings.radius * 2 + 'px';
         hitRound.style.height = me.weapon.settings.radius * 2 + 'px';
+        game.updateInventory(me.weapon.settings.className, me.weapon.settings.info);
         weapon.destroy();
-
     };
     this.checkWeapon = function(weapon) {
         if (interSect({ x: -backgroundPosX + centerX, y: -backgroundPosY + centerY }, weapon, me.weapon.settings.radius)) {

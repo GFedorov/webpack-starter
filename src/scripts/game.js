@@ -49,7 +49,7 @@ function Game(stage, gameWorld){
         hpEl.style.width = hp + '%';
     };
     this.updateInventory = function(img, info){
-        invImg.innerHTML = `<img src = "/img/${img}.png"/>`;
+        invImg.innerHTML = `<img src = "/src/img/${img}.png"/>`;
         invInfo.innerHTML = info;
     };
 }

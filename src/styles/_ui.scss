@@ -92,4 +92,12 @@
 #inventory {
     right: 20px;
     background-color: green;
+    .img {
+        img {
+            max-width: 100%;
+        }
+    }
+    .info {
+        font-size: 24px;
+    }
 }

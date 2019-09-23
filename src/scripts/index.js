@@ -1,6 +1,6 @@
 import '../styles/index.scss';
 import { Hero, createMonster, Monster } from './monster.js';
-import { createWeapon, Weapon, getRandomWeapon,weapons } from './weapon.js';
+import { createWeapon, Weapon, getRandomWeapon,getWeapons } from './weapon.js';
 import {Game} from './game.js';
 //main script;
 
@@ -9,7 +9,8 @@ window.addEventListener('load', function() {
     var gameWorld = document.getElementById('gameworld');
     var game = new Game(stage, gameWorld);
 
-    game.updateInventory(weapons.dubina.className,weapons.dubina.info);
+    var dubina = getWeapons()['dubina'];
+    game.updateInventory(dubina.className,dubina.info);
 
     var hero = new Hero(game, stage, 0, 0);
     var monsters = [];

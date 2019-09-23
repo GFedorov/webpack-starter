@@ -65,10 +65,10 @@ function Weapon(id, stageEl, x, y, type) {
     this.draw();
 }
 
-
+const getWeapons = () => weapons
 export { 
     createWeapon, 
     Weapon, 
     getRandomWeapon,
-    weapons
+    getWeapons
 };
