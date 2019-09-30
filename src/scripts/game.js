@@ -1,11 +1,10 @@
-function Game(stage, gameWorld){
+function Game(stage, gameWorld, monsters){
     var me = this;
     var xpEl = document.querySelector('#info .hero-xp');
     var levelEl = document.querySelector('#info .hero-level');
     var hpEl = document.querySelector('#info #hp-wrapper .bar');
     var invImg = document.querySelector('#inventory .img ');
     var invInfo = document.querySelector('#inventory .info');
-
     
     this.stage =  stage;
     this.gameWorld =  gameWorld;
@@ -52,5 +51,20 @@ function Game(stage, gameWorld){
         invImg.innerHTML = `<img src = "/src/img/${img}.png"/>`;
         invInfo.innerHTML = info;
     };
+    this.nextLevel = () => {
+        console.log('End of game');
+    }
+    this.monsterDied = function (monster) {
+        console.log('monster died');
+        let count = 0;
+        monsters.forEach(monster => {
+            if(monster.active) {
+                count++;
+            }
+        });
+        if(!count) {
+            me.nextLevel();
+        }
+    }
 }
 export {Game};

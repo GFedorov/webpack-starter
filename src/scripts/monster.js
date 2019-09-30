@@ -143,13 +143,13 @@ function Hero(game, stageEl, x, y) {
 
 }
 
-function createMonster(stageEl, x, y, speed, monsters) {
-    var monster = new Monster('blob' + monsters.length, stageEl, x, y, speed);
+function createMonster(stageEl, x, y, speed, monsters, game) {
+    var monster = new Monster('blob' + monsters.length, stageEl, x, y, speed, game);
     monsters.push(monster);
     return monster;
 }
 
-function Monster(id, stageEl, x, y, speed) {
+function Monster(id, stageEl, x, y, speed, game) {
     var me = this;
     var el = document.createElement('div');
     var elHealthWrapper = document.createElement('div');
@@ -197,7 +197,9 @@ function Monster(id, stageEl, x, y, speed) {
         el.classList.add("fired");
         setTimeout(function() {
             stageEl.removeChild(el);
+            game.monsterDied(me);
         }, 1000);
+
     };
     this.fight = function(hero){
         if (!me.active){

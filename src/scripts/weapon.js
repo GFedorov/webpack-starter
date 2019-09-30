@@ -65,7 +65,7 @@ function Weapon(id, stageEl, x, y, type) {
     this.draw();
 }
 
-const getWeapons = () => weapons
+const getWeapons = () => weapons;
 export { 
     createWeapon, 
     Weapon, 
